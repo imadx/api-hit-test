@@ -1,0 +1,11 @@
+html,
+body {
+  background-color: black;
+  color: greenyellow;
+  font-family: sans-serif;
+}
+
+h1,
+h2 {
+  font-weight: normal;
+}
