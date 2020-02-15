@@ -1,33 +1,54 @@
-// Set up socket.io
 const socket = io();
-// Initialize a Feathers app
 const app = feathers();
 
-// Register socket.io to talk to our server
 app.configure(feathers.socketio(socket));
 
-// Form submission handler that sends a new message
-async function sendMessage() {
-	const messageInput = document.getElementById('message-text');
+socket.on('connect', function(socket) {
+	const statusDiv = document.getElementById('connection-status');
+	statusDiv.classList.remove('connection-status--failed');
+	statusDiv.innerText = 'Connection ready';
+});
 
-	// Create a new message with the input field value
-	await app.service('events').create({
-		text: messageInput.value
+let outputDiv = document.getElementById('output-list');
+let recordCountDiv = document.getElementById('record-count');
+
+let NumberFormat = new Intl.NumberFormat('en-US', {
+	maximumSignificantDigits: 3
+});
+
+let hitCount = 0;
+
+let hitCountRAF = null;
+function incrementHitCount() {
+	hitCount += 1;
+	if (hitCountRAF) {
+		cancelAnimationFrame(hitCountRAF);
+	}
+
+	hitCountRAF = requestAnimationFrame(() => {
+		if (hitCount === 1) {
+			recordCountDiv.innerText = '1 record retrieved';
+			return;
+		}
+
+		recordCountDiv.innerText = `${NumberFormat.format(
+			hitCount
+		)} records retrieved`;
 	});
-
-	messageInput.value = '';
 }
 
 // Renders a single message on the page
 function addEvent(message) {
-	document.getElementById('main').innerHTML += `<p>${JSON.stringify(
-		message
-	)}</p>`;
+	const { id: timestamp, data } = message;
+	outputDiv.innerHTML += `<li><span class="timestamp">${new Date(
+		timestamp
+	).toISOString()}</span>${JSON.stringify(data)}</li>`;
+	incrementHitCount();
 }
 
 const main = async () => {
 	// Find all existing events
-	const { count, events } = await app.service('events').find();
+	const { events } = await app.service('events').find();
 
 	// Add existing events to the list
 	events.forEach(addEvent);

@@ -16,7 +16,7 @@ export default class EventDetailService {
     async create(event: Pick<EventDetail, 'data'>) {
         const eventDetail: EventDetail = {
             id: +new Date(),
-            data: event.data,
+            data: event,
         }
 
         if (this.eventDetailList.length > 1000) {

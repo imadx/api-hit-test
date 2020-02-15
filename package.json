@@ -5,15 +5,24 @@
   "scripts": {
     "start": "ts-node -T index.ts",
     "dev": "ts-node index.ts",
+    "static-dev": "parcel public/index.html -d ./dist",
+    "static-build": "parcel build public/index.html -d ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ishan Madhusanka",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.8.4",
     "@feathersjs/express": "^4.5.1",
     "@feathersjs/feathers": "^4.5.1",
     "@feathersjs/socketio": "^4.5.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "cssnano": "^4.1.10",
+    "sass": "^1.25.0"
   }
 }
