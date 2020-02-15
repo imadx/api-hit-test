@@ -6,7 +6,7 @@ import socketIO from '@feathersjs/socketio';
 import EventDetailService from './services/EventDetailService'
 import logger from './util/logger'
 
-const PORT = process.env.NODE_ENV === "production" ? 80 : 3030;
+const PORT = process.env.PORT || 3030;
 
 const app = express(feathers());
 
@@ -27,7 +27,7 @@ app.on('connection', connection =>
 app.publish(data => app.channel('everybody'));
 
 app.listen(PORT).on('listening', () =>
-    logger.log(`Feathers server listening on http://localhost:${PORT}`)
+    logger.log(`Feathers server listening on http://0.0.0.0:${PORT}`)
 );
 
 app.service('events').create({
