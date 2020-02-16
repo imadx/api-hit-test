@@ -3,7 +3,7 @@
 Use the following to hit the service
 
 ```bash
-curl -X POST -d '{"data": 123, "asdf": 123123}'  -H "Content-Type: application/json" 'https://api-hit-test.herokuapp.com/events'
+curl -X POST -d '{"location": "/app/home", "queryStrings": { "user_id":  "001" }}'  -H "Content-Type: application/json" 'https://api-hit-test.herokuapp.com/events'
 ```
 
 And monitor the hits on
