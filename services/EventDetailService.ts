@@ -1,3 +1,5 @@
+const serverStartDate = new Date();
+
 export interface EventDetail {
     id?: number;
     data?: object;
@@ -8,6 +10,7 @@ export default class EventDetailService {
 
     async find() {
         return {
+            serverStartDate, 
             count: this.eventDetailList.length,
             events: this.eventDetailList
         };

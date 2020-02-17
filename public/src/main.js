@@ -10,6 +10,7 @@ socket.on('connect', function(socket) {
 });
 
 let outputDiv = document.getElementById('output-list');
+let serverStartDateDiv = document.getElementById('server-start-date');
 let recordCountDiv = document.getElementById('record-count');
 
 let NumberFormat = new Intl.NumberFormat('en-US', {
@@ -37,23 +38,35 @@ function incrementHitCount() {
 	});
 }
 
+function formateDate(date) {
+	return new Date(date).toLocaleString();
+}
+// Updates the server start time
+function updateServerStartTime(startDate) {
+	serverStartDateDiv.innerText = `Server started on ${formateDate(startDate)}`;
+}
+
 // Renders a single message on the page
 function addEvent(message) {
 	const { id: timestamp, data } = message;
-	outputDiv.innerHTML += `<li><span class="timestamp">${new Date(
+
+	outputDiv.innerHTML += `<li><span class="timestamp">${formateDate(
 		timestamp
-	).toISOString()}</span>${JSON.stringify(data)}</li>`;
+	)}</span>${JSON.stringify(data)}</li>`;
 	incrementHitCount();
 }
 
 // Button to Reset local logs
-document.getElementById('btn-clear-local-logs').addEventListener('click', () => {
-	outputDiv.innerHTML = ``;
-})
+document
+	.getElementById('btn-clear-local-logs')
+	.addEventListener('click', () => {
+		outputDiv.innerHTML = ``;
+	});
 
 const main = async () => {
 	// Find all existing events
-	const { events } = await app.service('events').find();
+	const { events, serverStartDate } = await app.service('events').find();
+	updateServerStartTime(serverStartDate);
 
 	// Add existing events to the list
 	events.forEach(addEvent);
