@@ -25,23 +25,54 @@
 		</div>
 		<div class="content">
 			<div class="container">
-                <div class="output">
-                    <div class="summary">
-                        Sample cURL
-                    </div>
-                    <ul>
-                        <li>curl -X POST -d '{"location": "/app/home", "queryStrings": { "user_id":  "001" }}'  -H "Content-Type: application/json" 'https://api-hit-test.herokuapp.com/events'</li>
-                    </ul>
-                </div>
+				<div class="output">
+					<div class="summary toggle is-visible">
+						Sample cURL
+						<button>Toggle Sample</button>
+					</div>
+					<ul>
+						<li class="no-hover">
+							curl -X POST -d '{"location": "/app/home", "queryStrings": {
+							"user_id": "001" }}' -H "Content-Type: application/json"
+							'https://api-hit-test.herokuapp.com/events'
+						</li>
+					</ul>
+					<div class="summary toggle">
+						Sample fetch
+						<button>Toggle Sample</button>
+					</div>
+					<ul>
+						<li class="no-hover">
+							<code>let data = {
+  location: '/app/home',
+  queryStrings: { user_id: '001' }
+};
+
+await fetch('https://api-hit-test.herokuapp.com/events', {
+  body: JSON.stringify(data),
+  mode: 'cors',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  method: 'POST'
+});</code>
+						</li>
+					</ul>
+				</div>
+				<br>
 				<div class="output">
 					<div class="summary">
 						<div id="record-count" class="hit-count">No records received</div>
-						<div id="connection-status" class="connection-status connection-status--failed">
+						<div
+							id="connection-status"
+							class="connection-status connection-status--failed"
+						>
 							Connection not ready
 						</div>
+						<button id="btn-clear-local-logs">Clear local logs</button>
+						<button onclick="window.location.reload()">Reload</button>
 					</div>
-					<ul id="output-list">
-					</ul>
+					<ul id="output-list"></ul>
 				</div>
 			</div>
 		</div>

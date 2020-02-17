@@ -46,6 +46,11 @@ function addEvent(message) {
 	incrementHitCount();
 }
 
+// Button to Reset local logs
+document.getElementById('btn-clear-local-logs').addEventListener('click', () => {
+	outputDiv.innerHTML = ``;
+})
+
 const main = async () => {
 	// Find all existing events
 	const { events } = await app.service('events').find();
@@ -58,3 +63,14 @@ const main = async () => {
 };
 
 main();
+
+// Toggle buttons
+[...document.querySelectorAll('.toggle button')].forEach(toggleElement => {
+	toggleElement.addEventListener('click', e => {
+		const button = e.target;
+		const headingTitle = button.closest('div');
+		if (headingTitle) {
+			headingTitle.classList.toggle('is-visible');
+		}
+	});
+});
