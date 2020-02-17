@@ -43,19 +43,19 @@
 					</div>
 					<ul>
 						<li class="no-hover">
-							<code><script>document.write(`let data = {
+							<code>let data = {
   location: '/app/home',
   queryStrings: { user_id: '001' }
 };
 
 await fetch('https://api-hit-test.herokuapp.com/events', {
-  body: JSON.stringify(data),
   mode: 'cors',
   headers: {
     'Content-Type': 'application/json'
   },
   method: 'POST'
-});`)</script></code>
+  body: JSON.stringify(data),
+});</code>
 						</li>
 					</ul>
 					<div class="summary toggle">
