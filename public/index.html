@@ -38,12 +38,12 @@
 						</li>
 					</ul>
 					<div class="summary toggle">
-						Sample fetch
+						Sample Browser Fetch
 						<button>Toggle Sample</button>
 					</div>
 					<ul>
 						<li class="no-hover">
-							<code>let data = {
+							<code><script>document.write(`let data = {
   location: '/app/home',
   queryStrings: { user_id: '001' }
 };
@@ -55,7 +55,49 @@ await fetch('https://api-hit-test.herokuapp.com/events', {
     'Content-Type': 'application/json'
   },
   method: 'POST'
-});</code>
+});`)</script></code>
+						</li>
+					</ul>
+					<div class="summary toggle">
+						Sample NodeJS snippet
+						<button>Toggle Sample</button>
+					</div>
+					<ul>
+						<li class="no-hover">
+							<code><script>
+								document.write(`const https = require('https');
+
+const emitStats = (data = {}) => {
+  const postData = JSON.stringify(data);
+
+  const options = {
+    hostname: 'api-hit-test.herokuapp.com',
+    port: 443,
+    path: '/events',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const req = https.request(options, res => {
+    res.on('data', d => {
+      process.stdout.write(d);
+    });
+  });
+
+  req.on('error', e => {
+    throw new Error(e);
+  });
+
+  req.write(postData);
+  req.end();
+};
+
+emitStats({
+  location: '/app/home',
+  queryStrings: { user_id: '001' }
+});`)</script></code>
 						</li>
 					</ul>
 				</div>
